@@ -1,0 +1,36 @@
+2.1:
+	Jag skapar katalogen 'TDP004' och 'TDP004/lab1' med hjälp av 'mkdir'.
+	Sedan skapar jag 'TDP004/README.md' med 'nano README.md' och sparar filen med mycket kort basinformation.
+	Jag skapar ett nytt repository på Gitlab genom deras hemsida med samma namn som min katalog ('TDP004').
+	Jag initialiserar mitt lokala git repository med 'git init' från inuti katalogen.
+	Nu lägger jag till alla filer jag vill ha med i repositorit med 'git add .' (eller 'git add *').
+	Sedan skapar jag en kommit med 'git commit -m "Initial commit"' och pushar ändringarna med 'git push -u <Gitlab SSH>,
+	där <Gitlab SSH> är SSH nyckeln jag får av att klicka på 'Clone'-knappen i Gitlab för mitt repository.
+
+2.2:
+	TODO: Skapa lab1 genom SSH
+
+2.3:
+	Jag skriver lite extra information i min 'README.md' på detta system och sparar.
+	Sedan kör jag 'git pull' och får meddelande om att jag har stridande ändringar mot gitlab.
+	Jag kör 'git diff' för att se vad som inte stämmer överrens med filerna och går sedan in i filen som har konflikt ('README.md').
+	Där kan jag se vad som är problematiskt och jag tar bort det jag inte vill ska stå kvar och sparar istället det jag vill ska stå med.
+	Jag kör 'git add README.md' för att lägga till mina ändringar, 'git commit -m "Fixed conflict"' för att sedan köra 'git push', vilket löser konflikten.
+
+2.4:
+	Jag använder mig utav 'touch test.py' för att skapa testfilen.
+	Sedan använder jag 'nano' för att redigera filen och skapar ett enkelt Hello World program:
+
+	---
+	#!/usr/bin/env python3
+	def main():
+		print("Hello world!")
+
+	main()
+	---
+	
+	Tillbaka i terminalen skriver jag 'chmod +x test.py' för att göra filen exekverbar och jag kan nu köra den med './test.py'.
+	Jag lägger till en kommentar i slutet av filen med följande:
+	'echo "#Detta är en kommentar som skapats med echo" >> test.py'
+
+	TODO: Kopiera lab2 till lab3 och byt namnen på alla filer
