@@ -34,3 +34,48 @@
 	'echo "#Detta är en kommentar som skapats med echo" >> test.py'
 
 	TODO: Kopiera lab2 till lab3 och byt namnen på alla filer
+
+2.5:
+	Jag använder mig utav 'find . -not -path "*./*' för att lista alla filer i nuvarande katalog samt underkataloger utan att lista dolda filer.
+	Detta ger mig: #TODO: Ska den sluta vid README?
+	
+	---
+	.
+	./lab1
+	./lab1/test.txt
+	./README.md
+	./test.py
+	./instructions.txt
+	---
+	
+2.6:
+	För att lista alla körbara program i min hemkatalog köra jag 'find ~ -executable'. Detta ger mig en lista för lång att skriva med här.
+	För att smalna av sökningen till enbart Pythonfiler som är direkt körbara kan jag använda mig utav:
+	
+	---
+	find . -name "*.py" -executable -exec grep -l "#\!/usr/bin/env python3" {} \;
+	---
+	
+	Och för att hitta alla filer som innehåller någon kommentar lämplig för Python använder jag:
+	
+	---
+	find ~ -maxdepth 1 -type f -exec grep -l "#*" {} \;
+	---
+	
+	Som ger mig:
+	
+	---
+	/home/arctifox/.bash_history
+	/home/arctifox/.python_history
+	/home/arctifox/.nvidia-settings-rc
+	/home/arctifox/.git-credentials
+	/home/arctifox/.profile
+	/home/arctifox/.bashrc
+	/home/arctifox/.bash_logout
+	/home/arctifox/.gitconfig
+	/home/arctifox/.lesshst
+	/home/arctifox/#test.txt#
+	---
+	
+2.7:
+	
