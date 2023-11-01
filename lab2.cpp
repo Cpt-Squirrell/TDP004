@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     tax *= 0.01; // Make tax into 0.0 - 1.0 interval
     
     cout << "MOMSTABELLEN\n"
-         << "=============\n";
+         << "============\n";
 
     cout << "\tPris\tMoms\tPris med moms\n"
          << std::setfill('-') << "\t\t\t"
