@@ -61,10 +61,9 @@ int main(int argc, char* argv[])
          << std::setfill(' ') << endl;
     
     int iterator = 0;
-    for (float price = firstPrice; price - lastPrice <= 0.01f; price = firstPrice + stepLength * iterator)
+    for (float price = firstPrice; price - lastPrice <= 0.01f; price = firstPrice + stepLength * iterator++)
     {
         cout << '\t' << price << '\t' << calculateVAT(price, tax) << '\t' << calculatePriceVAT(price, tax) << endl;
-        iterator++;
     }
     
     return 0;
