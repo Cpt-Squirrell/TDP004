@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     cout << std::setw(12) << std::setprecision(2) << std::fixed;
 
     cout << "INMATNINGSDEL\n"
-         << "============";
+         << "=============\n";
     
     float firstPrice = -1.00f;
     while (firstPrice < 0.00f) {
@@ -60,9 +60,11 @@ int main(int argc, char* argv[])
          << std::setfill('-') << "\t\t\t"
          << std::setfill(' ') << endl;
     
-    for (float price = firstPrice; price - lastPrice <= 0.001f; price += stepLength)
+    int iterator = 0;
+    for (float price = firstPrice; price - lastPrice <= 0.01f; price = firstPrice + stepLength * iterator)
     {
         cout << '\t' << price << '\t' << calculateVAT(price, tax) << '\t' << calculatePriceVAT(price, tax) << endl;
+        iterator++;
     }
     
     return 0;
