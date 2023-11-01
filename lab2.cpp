@@ -18,8 +18,7 @@ int main(int argc, char* argv[])
     cout << std::setw(12) << std::setprecision(2) << std::fixed;
 
     cout << "INMATNINGSDEL\n"
-         << std::setfill('=') << '\t'
-         << std::setfill(' ') << endl;
+         << "=============\n";
     
     float firstPrice = -1.00f;
     while (firstPrice < 0.00f) {
@@ -55,14 +54,13 @@ int main(int argc, char* argv[])
     tax *= 0.01; // Make tax into 0.0 - 1.0 interval
     
     cout << "MOMSTABELLEN\n"
-         << std::setfill('=') << '\t'
-         << std::setfill(' ') << std::right << endl;
+         << "=============\n";
 
     cout << "\tPris\tMoms\tPris med moms\n"
          << std::setfill('-') << "\t\t\t"
          << std::setfill(' ') << endl;
     
-    for (float price = firstPrice; price <= lastPrice; price += stepLength)
+    for (float price = firstPrice; price - lastPrice <= 0.001f; price += stepLength)
     {
         cout << '\t' << price << '\t' << calculateVAT(price, tax) << '\t' << calculatePriceVAT(price, tax) << endl;
     }
