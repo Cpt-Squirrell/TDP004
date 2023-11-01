@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     cout << std::setw(12) << std::setprecision(2) << std::fixed;
 
     cout << "INMATNINGSDEL\n"
-         << "=============\n";
+         << "============";
     
     float firstPrice = -1.00f;
     while (firstPrice < 0.00f) {
