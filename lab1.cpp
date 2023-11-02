@@ -3,33 +3,37 @@
 #include <string>
 #include <limits>
 
-using std::cin, std::cout, std::numeric_limits, std::streamsize;
+using namespace std;
 
-int main(int argc, char** argv)
+// Komplettering: Ni ska inte behöva bygga långa strängar för att
+// skriva ut en formaterad text. Kombinera delarna med strömoperatorn
+// istället
+
+int main()
 {
     int integer{};
     float floating{};
     std::string text{}; 
     char character{};
     
-    std::cout << "Skriv in ett heltal: ";
-    std::cin >> integer;
-    std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    std::cout << "Du skev in talet: " << integer << std::endl;
+    cout << "Skriv in ett heltal: ";
+    cin >> integer;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Du skev in talet: " << integer << std::endl;
 
-    std::cout << "Skriv in fem heltal: ";
-    std::cin >> integer;
-    text += std::to_string(integer) + ", ";
-    std::cin >> integer;
-    text += std::to_string(integer) + ", ";
-    std::cin >> integer;
-    text += std::to_string(integer) + ", ";
-    std::cin >> integer;
-    text += std::to_string(integer) + ", ";
-    std::cin >> integer;
-    text += std::to_string(integer);
-    std::cout << "Du skrev in talen: " << text << std::endl;
-    std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Skriv in fem heltal: ";
+    cin >> integer;
+    cout << "Du skrev in talen: "
+         << integer << ", ";
+    cin >> integer;
+    cout << integer << ", ";
+    cin >> integer;
+    cout << integer << ", ";
+    cin >> integer;
+    cout << integer << ", ";
+    cin >> integer;
+    cout << integer << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     
     std::cout << "Skriv in ett flyttal: " << std::flush;
     std::cin >> floating;
@@ -39,15 +43,15 @@ int main(int argc, char** argv)
     std::cout << "Skriv in ett heltal och ett flyttal: ";
     std::cin >> integer;
     std::cin >> floating;
-    std::cout << "Du skrev in heltalet:" << std::setw(10) << integer << std::endl; // TODO: Must add whitespace to fill out
-    std::cout << "Du skrev in flyttalet:" << std::setw(9) << floating << std::endl; // TODO: --||--
+    std::cout << "Du skrev in heltalet:" << std::setw(10) << integer << std::endl;
+    std::cout << "Du skrev in flyttalet:" << std::setw(9) << floating << std::endl;
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in ett flyttal och ett heltal: ";
     std::cin >> floating;
     std::cin >> integer;
-    std::cout << "Du skrev in heltalet:" << std::setw(10) << std::setfill('-') << integer << std::endl; // TODO: Must add hyphens to fill out
-    std::cout << "Du skrev in flyttalet:" << std::setw(9) << std::setfill('-') << floating << std::endl; // TODO: --||--
+    std::cout << "Du skrev in heltalet:" << std::setw(10) << std::setfill('-') << integer << std::endl;
+    std::cout << "Du skrev in flyttalet:" << std::setw(9) << std::setfill('-') << floating << std::endl;
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
     
     std::cout << "Skriv in ett tecken: ";
@@ -71,10 +75,11 @@ int main(int argc, char** argv)
     std::cout << "Du skrev in \"" << floating << "\" och \"" << text << "\"." << std::endl;  
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    std::cout << "Skriv in en hel rad med text: ";
-    std::getline(std::cin, text);
-    std::cout << "Du skrev in textraden: \'" << text << "\'" << std::endl;
-    std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "Skriv in en hel rad med text: ";
+    getline(std::cin, text);
+    cout << "Du skrev in textraden: \'" << text << "\'" << std::endl;
+    getline(std::cin, text);
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in en textrad som slutar med ett negativt heltal: ";
     std::getline(std::cin, text, '-');
