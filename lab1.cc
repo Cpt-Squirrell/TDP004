@@ -41,15 +41,13 @@ int main()
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in ett heltal och ett flyttal: ";
-    std::cin >> integer;
-    std::cin >> floating;
+    std::cin >> integer >> floating;
     std::cout << "Du skrev in heltalet:" << std::setw(10) << integer << std::endl;
     std::cout << "Du skrev in flyttalet:" << std::setw(9) << floating << std::endl;
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in ett flyttal och ett heltal: ";
-    std::cin >> floating;
-    std::cin >> integer;
+    std::cin >> floating >> integer;
     std::cout << "Du skrev in heltalet:" << std::setw(10) << std::setfill('-') << integer << std::endl;
     std::cout << "Du skrev in flyttalet:" << std::setw(9) << std::setfill('-') << floating << std::endl;
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -65,21 +63,17 @@ int main()
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in ett heltal och en sträng: ";
-    std::cin >> integer;
-    std::cin >> text;
+    std::cin >> integer >> text;
     std::cout << "Du skrev in talet |" << integer << "| och strängen |" << text << "|." << std::endl;
 
     std::cout << "Skriv in en sträng och ett flyttal: ";
-    std::cin >> text;
-    std::cin >> floating;
+    std::cin >> text >> floating;
     std::cout << "Du skrev in \"" << floating << "\" och \"" << text << "\"." << std::endl;  
     std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "Skriv in en hel rad med text: ";
     getline(std::cin, text);
     cout << "Du skrev in textraden: \'" << text << "\'" << std::endl;
-    getline(std::cin, text);
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     std::cout << "Skriv in en textrad som slutar med ett negativt heltal: ";
     std::getline(std::cin, text, '-');

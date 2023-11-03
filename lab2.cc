@@ -1,18 +1,6 @@
 #include <iostream>
 #include <iomanip>
 
-// Komplettering: Använd filändelserna .h/.cc för era filer.
-//klar.
-
-// Komplettering: Utskriften följer inte det givna körexemplet. Formateringen är inte korrekt. (använd inte 'tab', formatera med det vi lärt er i kursen istället.)
-//klar.
-
-// Komplettering: loopen för felhantering av inmatning är inte okej. Att artificiellt sätta värdet till något ogiltigt för att tvinga loopen att köra ett första varv är inte bra. Då finns det ett bättre val av loop att använda.
-//klar.
-
-// Komplettering: momsprocenten får vara maximalt 100.
-//klar.
-
 using namespace std;
 
 float calculateVAT(float originalPrice, float tax)

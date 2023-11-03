@@ -15,8 +15,6 @@ class Clock
         Clock& operator-(const Clock& rhs);
         void operator++();
         void operator--();
-        friend std::ostream& operator<<(const std::ostream&, const Clock& rhs);
-        friend std::istream& operator>>(std::istream& lhs, Clock& rhs);
         Clock& operator<(const Clock& rhs);
         Clock& operator>(const Clock& rhs);
         Clock& operator==(const Clock& rhs);
@@ -45,3 +43,6 @@ class Clock
     private:
         int hour, minutes, seconds;
 };
+
+std::ostream& operator<<(const std::ostream&, const Clock& rhs);
+std::istream& operator>>(std::istream& lhs, Clock& rhs);

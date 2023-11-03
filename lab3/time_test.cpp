@@ -132,7 +132,7 @@ TEST_CASE("From string function", "[clock, functions]") {
 }
 
 TEST_CASE("Operator++ overloads", "[clock, operators]") {
-    
+    REQUIRE(Clock{}++ == Clock{0, 0, 1});
 }
 
 TEST_CASE("Operator-- overloads", "[clock, operators]") {
