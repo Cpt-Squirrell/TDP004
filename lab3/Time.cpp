@@ -1,5 +1,5 @@
 #include "Time.h"
-
+#include <cmath>
 
 Clock::Clock(std::string time)
 {
@@ -16,72 +16,105 @@ std::string Clock::toString(bool asLatin = false)
     
 }
 
-/*Clock& Clock::fromString(const std::string& string)
+Clock& Clock::fromString(const std::string& string)
 {
-    setTime(string);
+
+}
+
+inline Clock& Clock::operator+(const Clock& rhs)
+{
+    return *this + (rhs.hour * 3600 + rhs.minutes * 60 + rhs.seconds);
+}
+
+inline Clock& Clock::operator-(const Clock& rhs)
+{
+    return *this - (rhs.hour * 3600 + rhs.minutes * 60 + rhs.seconds);
+}
+
+Clock& Clock::operator+(int seconds)
+{
+    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
+    int addedHours{std::floor(seconds / HOUR)},
+        addedMinutes{std::floor(seconds / MINUTE)};
+    hour += addedHours;
+    minutes += addedMinutes;
+    seconds += seconds - addedMinutes * 60 - addedHours * 3600;
+}
+
+Clock& Clock::operator-(int seconds)
+{
+    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
+    int removedHours{std::floor(seconds / HOUR)},
+        removedMinutes{std::floor(seconds / MINUTE)};
+    hour -= removedHours;
+    minutes -= removedMinutes;
+    seconds += seconds - removedMinutes * 60 - removedMinutes * 3600;
+}
+
+Clock& Clock::operator++()
+{
+    this->seconds++;
+    this->validateTime();
     return *this;
-}*/
+}
 
-Clock& Clock::operator+(const Clock& rhs)
+Clock& Clock::operator--()
+{
+    this->seconds--;
+    this->validateTime();
+    return *this;
+}
+
+Clock Clock::operator++(int)
+{
+    Clock oldTime = *this;
+    this->seconds++;
+    this->validateTime();
+    return oldTime;
+}
+
+Clock Clock::operator--(int)
+{
+    Clock oldTime = *this;
+    this->seconds--;
+    this->validateTime();
+    return oldTime;
+}
+
+bool Clock::operator<(const Clock& rhs)
+{
+    if (this->toSeconds() < rhs.toSeconds())
+        return true;
+    else
+        return false;
+}
+
+bool Clock::operator<=(const Clock& rhs)
+{
+    if (this->toSeconds() <= rhs.toSeconds())
+        return true;
+    else
+        return false;
+}
+
+bool Clock::operator>(const Clock& rhs)
+{
+    return !(*this <= rhs);
+}
+
+bool Clock::operator>=(const Clock& rhs)
+{
+    return !(*this < rhs);
+}
+
+bool Clock::operator==(const Clock& rhs)
 {
 
 }
 
-Clock& Clock::operator-(const Clock& rhs)
+bool Clock::operator!=(const Clock& rhs)
 {
 
-}
-
-void Clock::operator++()
-{
-
-}
-
-void Clock::operator--()
-{
-
-}
-
-void Clock::operator++(int)
-{
-
-}
-
-void Clock::operator--(int)
-{
-
-}
-
-Clock& Clock::operator<(const Clock& rhs)
-{
-
-}
-
-Clock& Clock::operator>(const Clock& rhs)
-{
-
-}
-
-Clock& Clock::operator==(const Clock& rhs)
-{
-
-}
-
-Clock& Clock::operator!=(const Clock& rhs)
-{
-
-}
-
-int Clock::getHour() {
-    return hour;
-}
-
-int Clock::getMinutes() {
-    return minutes;
-}
-
-int Clock::getSeconds() {
-    return seconds;
 }
 
 void Clock::setTime(int hour, int minutes, int seconds) {
@@ -90,7 +123,35 @@ void Clock::setTime(int hour, int minutes, int seconds) {
     this->seconds = seconds;
 }
 
-Clock::~Clock()
+void Clock::validateTime()
 {
+    if (seconds > 59) {
+        seconds = 0;
+        minutes++;
+    }
+    
+    if (seconds < 0) {
+        minutes--;
+        seconds = 59;
+    }
+    
+    if (minutes > 59) {
+        minutes = 0;
+        hour++;
+    }
 
+    if (minutes < 0) {
+        hour--;
+        minutes = 59;
+    }
+
+    if (hour > 23)
+        hour = 0;
+
+    if (hour < 0)
+        hour = 23;
+}
+
+int Clock::toSeconds() const {
+    return this->hour * 3600 + this->minutes * 60 + this->seconds;
 }
