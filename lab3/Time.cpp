@@ -1,34 +1,42 @@
-#include "Time.h"
 #include <cmath>
-
-Clock::Clock(std::string time)
-{
-    //parse string to align with our tests and set the internal data
-}
+#include <sstream>
+#include <iomanip>
+#include "Time.h"
 
 Clock::Clock(int hour, int minutes, int seconds)
 {
     setTime(hour, minutes, seconds);
 }
 
-std::string Clock::toString(bool asLatin = false)
+std::string Clock::toString(bool asLatin = false) const
 {
-    
+    if (asLatin)
+        return (std::stringstream{} << std::setw(2) << std::setfill('0')
+                    << (hour <= 12 ? hour : hour - 12) << ':' 
+                    << minutes << ':' << seconds
+                    << (hour < 12 ? " AM" : " PM")).str();
+    else
+        return (std::stringstream{} << std::setw(2) << std::setfill('0')
+                    << hour << ':' << minutes << ':' << seconds).str();
 }
 
-Clock& Clock::fromString(const std::string& string)
+Clock& Clock::fromString(const std::string& string) const
 {
-
+    std::string hour, minutes, seconds;
+    std::getline((std::stringstream)string, hour, ':');
+    std::getline((std::stringstream)string, minutes, ':');
+    std::getline((std::stringstream)string, seconds);
+    return Clock{std::stoi(hour), std::stoi(minutes), std::stoi(seconds)};
 }
 
 inline Clock& Clock::operator+(const Clock& rhs)
 {
-    return *this + (rhs.hour * 3600 + rhs.minutes * 60 + rhs.seconds);
+    return *this + (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
 }
 
 inline Clock& Clock::operator-(const Clock& rhs)
 {
-    return *this - (rhs.hour * 3600 + rhs.minutes * 60 + rhs.seconds);
+    return *this - (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
 }
 
 Clock& Clock::operator+(int seconds)
@@ -38,7 +46,7 @@ Clock& Clock::operator+(int seconds)
         addedMinutes{std::floor(seconds / MINUTE)};
     hour += addedHours;
     minutes += addedMinutes;
-    seconds += seconds - addedMinutes * 60 - addedHours * 3600;
+    seconds += seconds - addedMinutes * MINUTE - addedHours * HOUR;
 }
 
 Clock& Clock::operator-(int seconds)
@@ -109,12 +117,12 @@ bool Clock::operator>=(const Clock& rhs)
 
 bool Clock::operator==(const Clock& rhs)
 {
-
+    return this->toSeconds() == rhs.toSeconds();
 }
 
 bool Clock::operator!=(const Clock& rhs)
 {
-
+    return !(*this == rhs);
 }
 
 void Clock::setTime(int hour, int minutes, int seconds) {
@@ -153,5 +161,18 @@ void Clock::validateTime()
 }
 
 int Clock::toSeconds() const {
-    return this->hour * 3600 + this->minutes * 60 + this->seconds;
+    return this->hour * HOUR + this->minutes * MINUTE + this->seconds;
+}
+
+std::ostream& operator<<(const std::ostream& lhs, const Clock& rhs)
+{
+    return lhs << rhs.toString(false);
+}
+
+std::istream& operator>>(std::istream& lhs, Clock& rhs)
+{
+    std::string input{};
+    lhs >> input;
+    rhs.fromString(input);
+    return lhs;
 }

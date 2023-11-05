@@ -28,7 +28,6 @@ TEST_CASE("Clock Initialization", "[clock, initialization]") {
 }
 
 TEST_CASE("From string function", "[clock, functions]") {
-
     REQUIRE_THROWS(Clock{}.fromString("55:10:40"));
     REQUIRE_THROWS(Clock{}.fromString("100:10:40"));
     REQUIRE_THROWS(Clock{}.fromString("20:190:40"));
