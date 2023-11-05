@@ -193,11 +193,12 @@ TEST_CASE("Operator-- overloads", "[clock, operators]") {
 }
 
 TEST_CASE("Operator+ overloads", "[clock, operators]") {
-    
+    REQUIRE(Clock{12,45,30} + Clock{12,45,30} == Clock{1,30,0});
+    //REQUIRE()
 }
 
 TEST_CASE("Operator- overloads", "[clock, operators]") {
-    
+    REQUIRE(Clock{12,45,30} - Clock{12,45,30} == Clock{0,0,0});
 }
 
 TEST_CASE("Operator< overloads", "[clock, operators]") {

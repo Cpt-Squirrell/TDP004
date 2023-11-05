@@ -8,6 +8,10 @@ Clock::Clock(int hour, int minutes, int seconds)
     setTime(hour, minutes, seconds);
 }
 
+Clock::Clock(const Clock& copy) : Clock(copy.hour, copy.minutes, copy.seconds)
+{
+}
+
 std::string Clock::toString(bool asLatin = false) const
 {
     if (asLatin)
@@ -22,11 +26,10 @@ std::string Clock::toString(bool asLatin = false) const
 
 Clock& Clock::fromString(const std::string& string) const
 {
-    std::string hour, minutes, seconds;
-    std::getline((std::stringstream)string, hour, ':');
-    std::getline((std::stringstream)string, minutes, ':');
-    std::getline((std::stringstream)string, seconds);
-    return Clock{std::stoi(hour), std::stoi(minutes), std::stoi(seconds)};
+    int hour, minutes, seconds;
+    std::istringstream converter{string};
+    converter >> hour; converter.ignore(1); converter >> minutes; converter.ignore(1); converter >> seconds;
+    return Clock{hour, minutes, seconds};
 }
 
 inline Clock& Clock::operator+(const Clock& rhs)
@@ -41,22 +44,22 @@ inline Clock& Clock::operator-(const Clock& rhs)
 
 Clock& Clock::operator+(int seconds)
 {
-    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
-    int addedHours{std::floor(seconds / HOUR)},
-        addedMinutes{std::floor(seconds / MINUTE)};
-    hour += addedHours;
-    minutes += addedMinutes;
-    seconds += seconds - addedMinutes * MINUTE - addedHours * HOUR;
+    for(int to_add = 0; to_add < seconds; ++to_add)
+    {
+        this->seconds++;
+        this->validateTime();
+    }
+    return *this;
 }
 
 Clock& Clock::operator-(int seconds)
 {
-    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
-    int removedHours{std::floor(seconds / HOUR)},
-        removedMinutes{std::floor(seconds / MINUTE)};
-    hour -= removedHours;
-    minutes -= removedMinutes;
-    seconds += seconds - removedMinutes * 60 - removedMinutes * 3600;
+    for(int to_sub = 0; to_sub < seconds; ++to_sub)
+    {
+        this->seconds--;
+        this->validateTime();
+    }
+    return *this;
 }
 
 Clock& Clock::operator++()
@@ -164,7 +167,7 @@ int Clock::toSeconds() const {
     return this->hour * HOUR + this->minutes * MINUTE + this->seconds;
 }
 
-std::ostream& operator<<(const std::ostream& lhs, const Clock& rhs)
+std::ostream& operator<<(std::ostream& lhs, const Clock& rhs)
 {
     return lhs << rhs.toString(false);
 }

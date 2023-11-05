@@ -6,6 +6,7 @@ class Clock
     public:
         Clock() : hour(0), minutes(0), seconds(0) {};
         Clock(int hour, int minutes, int seconds);
+        Clock(const Clock&);
 
         std::string toString(bool asLatin = false) const;
         Clock& fromString(const std::string& string) const;
@@ -44,5 +45,5 @@ class Clock
         static const int DAY{86400}, HOUR{3600}, MINUTE{60};
 };
 
-std::ostream& operator<<(const std::ostream& lhs, const Clock& rhs);
+std::ostream& operator<<(std::ostream& lhs, const Clock& rhs);
 std::istream& operator>>(std::istream& lhs, Clock& rhs);
