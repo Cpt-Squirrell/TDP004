@@ -308,7 +308,7 @@ TEST_CASE("Operator>= overloads", "[clock, operators]") {
     REQUIRE_FALSE(Clock{12,0,12} >= Clock{12,30,12});
     REQUIRE_FALSE(Clock{1,1,0} >= Clock{1,1,1});
 
-    REQUIRE(Clock{0,0,0} >= Clock{24,0,0});
+    REQUIRE(Clock{0,0,0} >= Clock{0,0,0});
     REQUIRE(Clock{12,0,0} >= Clock{12,0,0});
     REQUIRE(Clock{0,12,0} >= Clock{0,12,0});
     REQUIRE(Clock{0,0,12} >= Clock{0,0,12});

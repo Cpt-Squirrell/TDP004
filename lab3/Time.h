@@ -15,7 +15,7 @@ class Clock
         Clock& operator-=(int seconds);
         Clock  operator+ (int seconds);
         Clock  operator- (int seconds);
-        
+
         Clock& operator+=(const Clock& rhs);
         Clock& operator-=(const Clock& rhs);
         Clock  operator+ (const Clock& rhs);
@@ -25,10 +25,10 @@ class Clock
         Clock& operator--();
         Clock  operator++(int);
         Clock  operator--(int);
-        bool operator< (const Clock& rhs);
-        bool operator<=(const Clock& rhs);
-        bool operator> (const Clock& rhs);
-        bool operator>=(const Clock& rhs);
+        bool operator< (const Clock& rhs) const;
+        bool operator<=(const Clock& rhs) const;
+        bool operator> (const Clock& rhs) const;
+        bool operator>=(const Clock& rhs) const;
         bool operator!=(const Clock& rhs) const;
         bool operator==(const Clock& rhs) const;
 
@@ -41,9 +41,6 @@ class Clock
     private:
         void validateTime(); // Handles overflowing numbers (e.g. >= 60 seconds)
         int toSeconds() const; // Converts the clock into seconds from 00:00:00
-        int daysFromSeconds() const;
-        int hoursFromSeconds() const;
-        int minutesFromSeconds() const;
         int hour, minutes, seconds;
 
         // Seconds conversions for days, hours, and minutes
