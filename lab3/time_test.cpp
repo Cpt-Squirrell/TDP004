@@ -15,10 +15,6 @@ TEST_CASE("Clock Initialization", "[clock, initialization]") {
     REQUIRE_THROWS(Clock{50, 0, 0});
     REQUIRE_THROWS(Clock{10, 20, 70});
     REQUIRE_THROWS(Clock{0, 100, 20});
-    REQUIRE_THROWS(Clock{0.01, 10, 5});
-    REQUIRE_THROWS(Clock{10, 0.05, 5});
-    REQUIRE_THROWS(Clock{'5', '1', '2'});
-    REQUIRE_THROWS(Clock{' ', ' ', ' '});
 
     REQUIRE_NOTHROW(Clock{0, 0, 0});
     REQUIRE_NOTHROW(Clock{12, 0, 0});

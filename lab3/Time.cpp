@@ -8,11 +8,7 @@ Clock::Clock(int hour, int minutes, int seconds)
     setTime(hour, minutes, seconds);
 }
 
-Clock::Clock(const Clock& copy) : Clock(copy.hour, copy.minutes, copy.seconds)
-{
-}
-
-std::string Clock::toString(bool asLatin = false) const
+std::string Clock::toString(bool asLatin) const
 {
     if (asLatin)
         return (std::stringstream{} << std::setw(2) << std::setfill('0')
@@ -24,22 +20,16 @@ std::string Clock::toString(bool asLatin = false) const
                     << hour << ':' << minutes << ':' << seconds).str();
 }
 
-Clock& Clock::fromString(const std::string& string) const
+Clock::Clock(const std::string& time)
 {
-    int hour, minutes, seconds;
+    fromString(time);
+}
+
+Clock& Clock::fromString(const std::string& string)
+{
     std::istringstream converter{string};
     converter >> hour; converter.ignore(1); converter >> minutes; converter.ignore(1); converter >> seconds;
-    return Clock{hour, minutes, seconds};
-}
-
-inline Clock& Clock::operator+(const Clock& rhs)
-{
-    return *this + (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
-}
-
-inline Clock& Clock::operator-(const Clock& rhs)
-{
-    return *this - (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
+    return *this;
 }
 
 Clock& Clock::operator+(int seconds)
@@ -60,6 +50,16 @@ Clock& Clock::operator-(int seconds)
         this->validateTime();
     }
     return *this;
+}
+
+Clock& Clock::operator+(const Clock& rhs)
+{
+    return *this + (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
+}
+
+Clock& Clock::operator-(const Clock& rhs)
+{
+    return *this - (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
 }
 
 Clock& Clock::operator++()
@@ -118,15 +118,19 @@ bool Clock::operator>=(const Clock& rhs)
     return !(*this < rhs);
 }
 
-bool Clock::operator==(const Clock& rhs)
+bool Clock::operator==(const Clock& rhs) const
 {
     return this->toSeconds() == rhs.toSeconds();
 }
 
-bool Clock::operator!=(const Clock& rhs)
+bool Clock::operator!=(const Clock& rhs) const
 {
     return !(*this == rhs);
 }
+
+int Clock::getHour()    { return hour;    }
+int Clock::getMinutes() { return minutes; }
+int Clock::getSeconds() { return seconds; }
 
 void Clock::setTime(int hour, int minutes, int seconds) {
     this->hour = hour;
