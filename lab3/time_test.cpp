@@ -124,7 +124,7 @@ TEST_CASE("To string function", "[clock, functions]") {
     REQUIRE(Clock{"05:05:35"}.toString(false) == "05:05:35");
 
     // 12 hour format
-    REQUIRE(Clock{}.toString(true) == "00:00:00 am"); // Default
+    REQUIRE(Clock{}.toString(true) == "12:00:00 am"); // Default
     REQUIRE(Clock{"12:00:00"}.toString(true) == "12:00:00 pm");
     REQUIRE(Clock{"12:30:00"}.toString(true) == "12:30:00 pm");
     REQUIRE(Clock{"20:15:30"}.toString(true) == "08:15:30 pm");
