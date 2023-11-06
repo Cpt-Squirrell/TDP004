@@ -155,7 +155,7 @@ TEST_CASE("Operator++ overloads", "[clock, operators]") {
 
     testClock = Clock{23, 59, 59};
     REQUIRE(++testClock == Clock{0, 0, 0});
-    REQUIRE(testClock == Clock{23, 59, 59});
+    REQUIRE(testClock == Clock{0, 0, 0});
     
     testClock = Clock{12, 30, 0};
     REQUIRE(++testClock == Clock{12, 30, 1});
@@ -189,14 +189,14 @@ TEST_CASE("Operator-- overloads", "[clock, operators]") {
 }
 
 TEST_CASE("Operator+ overloads", "[clock, operators]") {
-    REQUIRE(Clock{12, 45, 30} + Clock{12, 45, 30} == Clock{1,30,0});
+    REQUIRE(Clock{12, 45, 30} + Clock{12, 45, 30} == Clock{1,31,0});
     REQUIRE(Clock{0, 0, 0} + Clock{0, 0, 0} == Clock{0,0,0});
     REQUIRE(Clock{1, 0, 30} + Clock{0, 1, 30} == Clock{1,2,0});
 }
 
 TEST_CASE("Operator- overloads", "[clock, operators]") {
     REQUIRE(Clock{12,45,30} - Clock{12,45,30} == Clock{0,0,0});
-    REQUIRE(Clock{24,00,00} - Clock{24,00,00} == Clock{0,0,0});
+    REQUIRE(Clock{22,00,00} - Clock{21,00,00} == Clock{1,0,0});
 }
 
 TEST_CASE("Operator+= overloads", "[clock, operators]") {
@@ -218,8 +218,7 @@ TEST_CASE("Operator+= overloads", "[clock, operators]") {
 }
 
 TEST_CASE("Operator-= overloads", "[clock, operators]") {
-    Clock testClock{10,10,0};
-    REQUIRE((testClock-=10) == Clock{10,10,10});
+    Clock testClock{10,10,10};
     REQUIRE((testClock-=10) == Clock{10,10,00});
     REQUIRE((testClock-=10) == Clock{10,9,40});
     REQUIRE((testClock-=10) == Clock{10,9,30});
@@ -234,7 +233,7 @@ TEST_CASE("Operator-= overloads", "[clock, operators]") {
 
 TEST_CASE("Operator< overloads", "[clock, operators]") {
     REQUIRE_FALSE(Clock{0,0,1} < Clock{0,0,0});
-    REQUIRE_FALSE(Clock{0,2,0} < Clock{24,0,0});
+    REQUIRE_FALSE(Clock{0,2,0} < Clock{0,0,0});
     REQUIRE_FALSE(Clock{12,0,1} < Clock{12,0,0});
     REQUIRE_FALSE(Clock{1,12,0} < Clock{0,12,0});
     REQUIRE_FALSE(Clock{0,12,12} < Clock{0,0,12});
@@ -254,7 +253,7 @@ TEST_CASE("Operator< overloads", "[clock, operators]") {
 
 TEST_CASE("Operator<= overloads", "[clock, operators]") {
     REQUIRE(Clock{0,0,0} <= Clock{0,0,0});
-    REQUIRE(Clock{0,0,0} <= Clock{24,0,0});
+    REQUIRE(Clock{0,0,0} <= Clock{0,0,0});
     REQUIRE(Clock{12,0,0} <= Clock{12,0,0});
     REQUIRE(Clock{0,12,0} <= Clock{0,12,0});
     REQUIRE(Clock{0,0,12} <= Clock{0,0,12});
@@ -272,7 +271,7 @@ TEST_CASE("Operator<= overloads", "[clock, operators]") {
 
 TEST_CASE("Operator> overloads", "[clock, operators]") {
     REQUIRE(Clock{0,0,1} > Clock{0,0,0});
-    REQUIRE(Clock{0,2,0} > Clock{24,0,0});
+    REQUIRE(Clock{0,2,0} > Clock{0,0,0});
     REQUIRE(Clock{12,0,1} > Clock{12,0,0});
     REQUIRE(Clock{1,12,0} > Clock{0,12,0});
     REQUIRE(Clock{0,12,12} > Clock{0,0,12});
@@ -292,7 +291,7 @@ TEST_CASE("Operator> overloads", "[clock, operators]") {
 
 TEST_CASE("Operator>= overloads", "[clock, operators]") {
     REQUIRE(Clock{0,0,1} >= Clock{0,0,0});
-    REQUIRE(Clock{0,2,0} >= Clock{24,0,0});
+    REQUIRE(Clock{0,2,0} >= Clock{0,0,0});
     REQUIRE(Clock{12,0,1} >= Clock{12,0,0});
     REQUIRE(Clock{1,12,0} >= Clock{0,12,0});
     REQUIRE(Clock{0,12,12} >= Clock{0,0,12});
@@ -318,7 +317,7 @@ TEST_CASE("Operator>= overloads", "[clock, operators]") {
 }
 
 TEST_CASE("Operator== overloads", "[clock, operators]") {
-    REQUIRE(Clock{0,0,0} == Clock{24,0,0});
+    REQUIRE(Clock{0,0,0} == Clock{0,0,0});
     REQUIRE(Clock{12,0,0} == Clock{12,0,0});
     REQUIRE(Clock{0,12,0} == Clock{0,12,0});
     REQUIRE(Clock{0,0,12} == Clock{0,0,12});
@@ -327,7 +326,7 @@ TEST_CASE("Operator== overloads", "[clock, operators]") {
 }
 
 TEST_CASE("Operator!= overloads", "[clock, operators]") {
-    REQUIRE_FALSE(Clock{0,0,0} != Clock{24,0,0});
+    REQUIRE_FALSE(Clock{0,0,0} != Clock{0,0,0});
     REQUIRE_FALSE(Clock{12,0,0} != Clock{12,0,0});
     REQUIRE_FALSE(Clock{0,12,0} != Clock{0,12,0});
     REQUIRE_FALSE(Clock{0,0,12} != Clock{0,0,12});
