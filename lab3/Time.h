@@ -32,9 +32,9 @@ class Clock
         bool operator!=(const Clock& rhs) const;
         bool operator==(const Clock& rhs) const;
 
-        int getHour();
-        int getMinutes();
-        int getSeconds();
+        const int getHour() const;
+        const int getMinutes() const;
+        const int getSeconds() const;
 
         void setTime(int hour, int minutes, int seconds);
 

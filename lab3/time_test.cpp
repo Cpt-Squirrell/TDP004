@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "Time.h"
+#include <iostream>
 
 TEST_CASE("Clock Initialization", "[clock, initialization]") {
     // Default
@@ -34,17 +35,18 @@ TEST_CASE("From string function", "[clock, functions]") {
     REQUIRE_THROWS(Clock{}.fromString("15:1040"));
     REQUIRE_THROWS(Clock{}.fromString("1510:40"));
     REQUIRE_THROWS(Clock{}.fromString("151040"));
-    REQUIRE_THROWS(Clock{}.fromString(":::"));
+    REQUIRE_THROWS(Clock{}.fromString(":::").toString());
+    REQUIRE_THROWS(Clock{}.fromString("10:10:").toString());
     REQUIRE_THROWS(Clock{}.fromString("10:00:"));
     REQUIRE_THROWS(Clock{}.fromString("-10::"));
     REQUIRE_THROWS(Clock{}.fromString(":-10:"));
     REQUIRE_THROWS(Clock{}.fromString("::-10"));
-    REQUIRE_THROWS(Clock{}.fromString("5:0:0"));
-    REQUIRE_THROWS(Clock{}.fromString("0:5:0"));
-    REQUIRE_THROWS(Clock{}.fromString("0:0:5"));
-    REQUIRE_THROWS(Clock{}.fromString("5:00:00"));
-    REQUIRE_THROWS(Clock{}.fromString("00:5:00"));
-    REQUIRE_THROWS(Clock{}.fromString("00:00:5"));
+    REQUIRE_NOTHROW(Clock{}.fromString("5:0:0"));
+    REQUIRE_NOTHROW(Clock{}.fromString("0:5:0"));
+    REQUIRE_NOTHROW(Clock{}.fromString("0:0:5"));
+    REQUIRE_NOTHROW(Clock{}.fromString("5:00:00"));
+    REQUIRE_NOTHROW(Clock{}.fromString("00:5:00"));
+    REQUIRE_NOTHROW(Clock{}.fromString("00:00:5"));
     REQUIRE_THROWS(Clock{}.fromString("24:00:00"));
     REQUIRE_THROWS(Clock{}.fromString("24:30:15"));
 
@@ -201,7 +203,7 @@ TEST_CASE("Operator- overloads", "[clock, operators]") {
 
 TEST_CASE("Operator+= overloads", "[clock, operators]") {
     Clock testClock{10,10,0};
-    REQUIRE((testClock+=10) == Clock{10,10,10});
+    CHECK((testClock+=10) == Clock{10,10,10});
     REQUIRE((testClock+=10) == Clock{10,10,20});
     REQUIRE((testClock+=10) == Clock{10,10,30});
     REQUIRE((testClock+=10) == Clock{10,10,40});
@@ -211,23 +213,26 @@ TEST_CASE("Operator+= overloads", "[clock, operators]") {
     REQUIRE((testClock+=10) == Clock{10,11,20});
     REQUIRE((testClock+=10) == Clock{10,11,30});
     REQUIRE((testClock+=10) == Clock{10,11,40});
+    REQUIRE((testClock+=10) == Clock{10,11,50});
     REQUIRE((testClock+=10) == Clock{10,12,0});
     REQUIRE((testClock+=0) == Clock{10,12,0});
-    REQUIRE((testClock+=(60*60)) == Clock{11,12,0});
-    REQUIRE_THROWS((testClock+=-10) == Clock{11,11,40});
+    REQUIRE((testClock+=(60*60)+1) == Clock{10,13,1});
+    REQUIRE_THROWS((testClock+=-1) == Clock{10,13,0});
 }
 
 TEST_CASE("Operator-= overloads", "[clock, operators]") {
     Clock testClock{10,10,10};
     REQUIRE((testClock-=10) == Clock{10,10,00});
+    REQUIRE((testClock-=10) == Clock{10,9,50});
     REQUIRE((testClock-=10) == Clock{10,9,40});
     REQUIRE((testClock-=10) == Clock{10,9,30});
     REQUIRE((testClock-=10) == Clock{10,9,20});
     REQUIRE((testClock-=10) == Clock{10,9,10});
     REQUIRE((testClock-=10) == Clock{10,9,00});
+    REQUIRE((testClock-=10) == Clock{10,8,50});
     REQUIRE((testClock-=10) == Clock{10,8,40});
     REQUIRE((testClock-=10) == Clock{10,8,30});
-    REQUIRE((testClock-=(60*60)) == Clock{9,8,30});
+    REQUIRE((testClock-=(60*60)) == Clock{10,7,30});
     REQUIRE_THROWS((testClock-=-10) == Clock{9,8,40});
 }
 
