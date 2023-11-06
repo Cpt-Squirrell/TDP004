@@ -31,7 +31,6 @@ Clock::Clock(const std::string& time)
     fromString(time);
 }
 
-//TODO: Add exceptions to incompatible values
 Clock& Clock::fromString(const std::string& string)
 {
     std::istringstream converter{string};
@@ -144,7 +143,6 @@ Clock  Clock::operator+ (int added_seconds)
     return (this->operator+(temp));
 }
 
-// TODO: Implement fixes for operator+ into operator-
 Clock  Clock::operator- (int removed_seconds) {
     Clock temp{ (removed_seconds/DAY)%24, (removed_seconds/HOUR)%60, (removed_seconds)%60 };
     return (this->operator-(temp));
