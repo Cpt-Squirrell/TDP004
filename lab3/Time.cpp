@@ -1,6 +1,7 @@
 #include <cmath>
 #include <sstream>
 #include <iomanip>
+#include <exception>
 #include "Time.h"
 
 Clock::Clock(int hour, int minutes, int seconds)
@@ -32,35 +33,48 @@ Clock& Clock::fromString(const std::string& string)
     return *this;
 }
 
-Clock& Clock::operator+(int seconds)
+Clock& Clock::operator+=(int seconds)
 {
-    for(int to_add = 0; to_add < seconds; ++to_add)
-    {
-        this->seconds++;
-        this->validateTime();
-    }
+    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
+    int addedHours{std::floor(seconds / HOUR)},
+        addedMinutes{std::floor(seconds / MINUTE)};
+    hour += addedHours;
+    minutes += addedMinutes;
+    seconds += seconds - addedHours * HOUR - addedMinutes * MINUTE;
     return *this;
 }
 
-Clock& Clock::operator-(int seconds)
+Clock& Clock::operator-=(int seconds)
 {
-    for(int to_sub = 0; to_sub < seconds; ++to_sub)
-    {
-        this->seconds--;
-        this->validateTime();
-    }
+    seconds -= DAY * std::floor(seconds / DAY); // Remove extra days
+    int removedHours{std::floor(seconds / HOUR)},
+        removedMinutes{std::floor(seconds / MINUTE)};
+    hour -= removedHours;
+    minutes -= removedMinutes;
+    seconds += seconds - removedHours * HOUR - removedMinutes * MINUTE;
     return *this;
 }
 
-Clock& Clock::operator+(const Clock& rhs)
+Clock Clock::operator+(const Clock& rhs)
 {
-    return *this + (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
+    return Clock{}
+}
+Clock& Clock::operator-=(const Clock& rhs)
+
+
+Clock& Clock::operator+=(const Clock& rhs)
+{
+    return *this += (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
 }
 
-Clock& Clock::operator-(const Clock& rhs)
+Clock& Clock::operator-=(const Clock& rhs)
 {
-    return *this - (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
+    return *this -= (rhs.hour * HOUR + rhs.minutes * MINUTE + rhs.seconds);
 }
+
+
+Clock& Clock::operator-=(const Clock& rhs)
+Clock& Clock::operator-=(const Clock& rhs)
 
 Clock& Clock::operator++()
 {
@@ -133,6 +147,9 @@ int Clock::getMinutes() { return minutes; }
 int Clock::getSeconds() { return seconds; }
 
 void Clock::setTime(int hour, int minutes, int seconds) {
+    if (hour < 0 || minutes < 0 || seconds < 0 ||
+        hour > 23 || minutes > 59 || seconds > 59)
+        throw std::invalid_argument("Attempted to assign negative value to a clock.");
     this->hour = hour;
     this->minutes = minutes;
     this->seconds = seconds;
@@ -182,4 +199,16 @@ std::istream& operator>>(std::istream& lhs, Clock& rhs)
     lhs >> input;
     rhs.fromString(input);
     return lhs;
+}
+
+int Clock::daysFromSeconds() const {
+
+}
+
+int Clock::hoursFromSeconds() const {
+
+}
+
+int Clock::minutesFromSeconds() const {
+
 }

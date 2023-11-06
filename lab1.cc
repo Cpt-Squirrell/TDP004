@@ -5,10 +5,6 @@
 
 using namespace std;
 
-// Komplettering: Ni ska inte behöva bygga långa strängar för att
-// skriva ut en formaterad text. Kombinera delarna med strömoperatorn
-// istället
-
 int main()
 {
     int integer{};

@@ -11,10 +11,16 @@ class Clock
         std::string toString(bool asLatin = false) const;
         Clock& fromString(const std::string& string);
 
-        Clock& operator+(int seconds);
-        Clock& operator-(int seconds);
-        Clock& operator+(const Clock& rhs);
-        Clock& operator-(const Clock& rhs);
+        Clock& operator+=(int seconds);
+        Clock& operator-=(int seconds);
+        Clock  operator+ (int seconds);
+        Clock  operator- (int seconds);
+        
+        Clock& operator+=(const Clock& rhs);
+        Clock& operator-=(const Clock& rhs);
+        Clock  operator+ (const Clock& rhs);
+        Clock  operator- (const Clock& rhs);
+        
         Clock& operator++();
         Clock& operator--();
         Clock  operator++(int);
@@ -35,6 +41,9 @@ class Clock
     private:
         void validateTime(); // Handles overflowing numbers (e.g. >= 60 seconds)
         int toSeconds() const; // Converts the clock into seconds from 00:00:00
+        int daysFromSeconds() const;
+        int hoursFromSeconds() const;
+        int minutesFromSeconds() const;
         int hour, minutes, seconds;
 
         // Seconds conversions for days, hours, and minutes
