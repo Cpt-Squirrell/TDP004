@@ -1,39 +1,42 @@
-#pragma once
 #include <string>
+#pragma once
 
 class Clock 
 {
     public:
         Clock() : hour(0), minutes(0), seconds(0) {};
         Clock(int hour, int minutes, int seconds);
+        Clock(const std::string& time);
 
         std::string toString(bool asLatin = false) const;
-        Clock& fromString(const std::string& string) const;
+        Clock& fromString(const std::string& string);
 
-        inline Clock& operator+(const Clock& rhs);
-        inline Clock& operator-(const Clock& rhs);
-        Clock& operator+(int seconds);
-        Clock& operator-(int seconds);
-        inline Clock& operator++();
-        inline Clock& operator--();
-        inline Clock  operator++(int);
-        inline Clock  operator--(int);
-        inline bool operator< (const Clock& rhs);
-        inline bool operator<=(const Clock& rhs);
-        inline bool operator> (const Clock& rhs);
-        inline bool operator>=(const Clock& rhs);
-        inline bool operator==(const Clock& rhs);
-        inline bool operator!=(const Clock& rhs);
+        Clock& operator+=(int seconds);
+        Clock& operator-=(int seconds);
+        Clock  operator+ (int seconds);
+        Clock  operator- (int seconds);
 
-        inline int getHour()    { return hour; }
-        inline int getMinutes() { return minutes; }
-        inline int getSeconds() { return seconds; }
+        Clock& operator+=(const Clock& rhs);
+        Clock& operator-=(const Clock& rhs);
+        Clock  operator+ (const Clock& rhs);
+        Clock  operator- (const Clock& rhs);
+        
+        Clock& operator++();
+        Clock& operator--();
+        Clock  operator++(int);
+        Clock  operator--(int);
+        bool operator< (const Clock& rhs) const;
+        bool operator<=(const Clock& rhs) const;
+        bool operator> (const Clock& rhs) const;
+        bool operator>=(const Clock& rhs) const;
+        bool operator!=(const Clock& rhs) const;
+        bool operator==(const Clock& rhs) const;
 
-        void setTime(int hour, int minutes, int seconds) {
-            this->hour = hour;
-            this->minutes = minutes;
-            this->seconds = seconds;
-        }
+        const int getHour() const;
+        const int getMinutes() const;
+        const int getSeconds() const;
+
+        void setTime(int hour, int minutes, int seconds);
 
     private:
         void validateTime(); // Handles overflowing numbers (e.g. >= 60 seconds)
@@ -44,5 +47,5 @@ class Clock
         static const int DAY{86400}, HOUR{3600}, MINUTE{60};
 };
 
-std::ostream& operator<<(const std::ostream& lhs, const Clock& rhs);
+std::ostream& operator<<(std::ostream& lhs, const Clock& rhs);
 std::istream& operator>>(std::istream& lhs, Clock& rhs);
