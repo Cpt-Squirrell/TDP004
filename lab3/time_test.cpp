@@ -110,6 +110,9 @@ TEST_CASE("From string function", "[clock, functions]") {
 
     REQUIRE_NOTHROW(Clock{}.fromString("10:30:00 am"));
     REQUIRE_NOTHROW(Clock{}.fromString("10:30:00 pm"));
+
+    REQUIRE_NOTHROW(Clock{}.fromString("12:00:00 pm"));
+    REQUIRE_NOTHROW(Clock{}.fromString("12:00:00 am"));
 }
 
 TEST_CASE("To string function", "[clock, functions]") {

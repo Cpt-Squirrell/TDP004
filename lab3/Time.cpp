@@ -53,7 +53,7 @@ Clock& Clock::fromString(const std::string& string)
         if(hour > 12)
             throw std::invalid_argument("Expected hour in the range 1 to 12 for am/pm string input.");
         if(am_pm == "pm")
-            hour += 12;
+            hour = (hour+12)%24;
     }
 
     if(hour > 23  || hour < 0)
