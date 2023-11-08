@@ -50,7 +50,7 @@ Clock& Clock::fromString(const std::string& string)
         converter >> am_pm;
         if(am_pm != "am" && am_pm != "pm")
             throw std::invalid_argument("Expected am or pm at the end of string input.");
-        if(hour > 12)
+        if(hour > 12 || hour < 1)
             throw std::invalid_argument("Expected hour in the range 1 to 12 for am/pm string input.");
         if(am_pm == "pm")
             hour = (hour+12)%24;
