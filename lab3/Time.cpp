@@ -214,17 +214,17 @@ bool Clock::operator!=(const Clock& rhs) const
     return !(*this == rhs);
 }
 
-const int Clock::getHour() const
+int Clock::getHour() const
 {
     return hour;
 }
 
-const int Clock::getMinutes() const
+int Clock::getMinutes() const
 {
     return minutes;
 }
 
-const int Clock::getSeconds() const
+int Clock::getSeconds() const
 {
     return seconds;
 }

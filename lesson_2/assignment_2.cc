@@ -1,12 +1,12 @@
-struct thing
+struct Element
 {
-    thing* next = this;
+    Element* next = this;
     int value = 5;
 };
 
 int main()
 {
-    thing* first = new thing;
+    Element* first = new Element;
 
     // Old
     (*first->next).next->value = 10;

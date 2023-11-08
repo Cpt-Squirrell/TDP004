@@ -1,5 +1,11 @@
-struct thing
+struct Element
 {
-    thing* next = this;
+    Element* next = this;
     int value = 5;
 };
+
+
+int main()
+{
+    Element* first = new Element;
+}
