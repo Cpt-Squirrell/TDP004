@@ -4,31 +4,38 @@
 #include <exception>
 #include "Time.h"
 
-Clock::Clock(int hour, int minutes, int seconds)
-{
-    setTime(hour, minutes, seconds);
-}
 
-std::string Clock::toString(bool asLatin) const
+Clock::Clock() : hour(0), minutes(0), seconds(0) {};
+
+Clock::Clock(const int hour, const int minutes, const int seconds)
+    : hour(hour), minutes(minutes), seconds(seconds)
 {
-    if (asLatin) {
-        int latinHour = hour <= 12 ? hour : hour - 12;
-        if (latinHour == 0) latinHour = 12;
-        return (std::stringstream{} 
-                    << std::setw(2) << std::setfill('0') << latinHour << ':' 
-                    << std::setw(2) << std::setfill('0') << minutes << ':'
-                    << std::setw(2) << std::setfill('0') << seconds
-                    << (hour < 12 ? " am" : " pm")).str();
-    } else
-        return (std::stringstream{}
-                    << std::setw(2) << std::setfill('0') << hour << ':' 
-                    << std::setw(2) << std::setfill('0') << minutes << ':'
-                    << std::setw(2) << std::setfill('0') << seconds).str();
+    if (hour < 0 || hour > 23 ||
+        minutes < 0 || minutes > 59 ||
+        seconds < 0 || seconds > 59)
+        throw std::out_of_range("Tried to create a clock with overflowing or underflowing values.");
 }
 
 Clock::Clock(const std::string& time)
 {
     fromString(time);
+}
+
+std::string Clock::toString(const bool asLatin) const
+{
+    if (asLatin) {
+        int latinHour = hour <= 12 ? hour : hour - 12;
+        if (latinHour == 0) latinHour = 12;
+        return (std::stringstream{} << std::setfill('0')
+                    << std::setw(2) << latinHour << ':'
+                    << std::setw(2) << minutes << ':'
+                    << std::setw(2) << seconds
+                    << (hour < 12 ? " am" : " pm")).str();
+    } else
+        return (std::stringstream{} << std::setfill('0')
+                    << std::setw(2) << hour << ':' 
+                    << std::setw(2) << minutes << ':'
+                    << std::setw(2) << seconds).str();
 }
 
 Clock& Clock::fromString(const std::string& string)
@@ -65,7 +72,7 @@ Clock& Clock::fromString(const std::string& string)
     return *this;
 }
 
-Clock Clock::operator+(const Clock& rhs)
+Clock Clock::operator+(const Clock& rhs) const
 {
     int seconds = this->seconds + rhs.seconds,
         minutes = this->minutes + rhs.minutes,
@@ -87,7 +94,7 @@ Clock Clock::operator+(const Clock& rhs)
     return Clock{hour, minutes, seconds};
 }
 
-Clock Clock::operator-(const Clock& rhs)
+Clock Clock::operator-(const Clock& rhs) const
 {
     int seconds = this->seconds - rhs.seconds,
         minutes = this->minutes - rhs.minutes,
@@ -137,13 +144,14 @@ Clock& Clock::operator-=(const Clock& rhs)
     return (this->operator-=(rhs.toSeconds()));
 }
 
-Clock  Clock::operator+ (int added_seconds)
+Clock  Clock::operator+ (int added_seconds) const
 {
     Clock temp{ (added_seconds/DAY)%24, (added_seconds/HOUR)%60, (added_seconds)%60 };
     return (this->operator+(temp));
 }
 
-Clock  Clock::operator- (int removed_seconds) {
+Clock  Clock::operator- (int removed_seconds) const
+{
     Clock temp{ (removed_seconds/DAY)%24, (removed_seconds/HOUR)%60, (removed_seconds)%60 };
     return (this->operator-(temp));
 }
@@ -229,7 +237,7 @@ int Clock::getSeconds() const
     return seconds;
 }
 
-void Clock::setTime(int hour, int minutes, int seconds) {
+void Clock::setTime(const int hour, const int minutes, const int seconds) {
     if (hour < 0 || minutes < 0 || seconds < 0)
         throw std::invalid_argument("Attempted to assign negative value to a clock.");
     if (hour > 23 || minutes > 59 || seconds > 59)

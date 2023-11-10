@@ -107,6 +107,8 @@ TEST_CASE("From string function", "[clock, functions]") {
     REQUIRE_THROWS(Clock{}.fromString("10:30:00 em"));
     REQUIRE_THROWS(Clock{}.fromString("15:30:00 am"));
     REQUIRE_THROWS(Clock{}.fromString("15:30:00 pm"));
+    REQUIRE_THROWS(Clock{}.fromString("00:00:00 am"));
+    REQUIRE_THROWS(Clock{}.fromString("00:30:00 pm"));
 
     REQUIRE_NOTHROW(Clock{}.fromString("10:30:00 am"));
     REQUIRE_NOTHROW(Clock{}.fromString("10:30:00 pm"));
